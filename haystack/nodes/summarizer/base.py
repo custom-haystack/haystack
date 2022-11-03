@@ -19,8 +19,12 @@ class BaseSummarizer(BaseComponent):
         Abstract method for creating a summary.
 
         :param documents: Related documents (e.g. coming from a retriever) that the answer shall be conditioned on.
-        :param generate_single_summary: This parameter is deprecated and will be removed in Haystack 1.12
-        :return: List of Documents, where Document.meta["summary"] contains the summarization
+        :param generate_single_summary: Whether to generate a single summary for all documents or one summary per document.
+                                        If set to "True", all docs will be joined to a single string that will then
+                                        be summarized.
+                                        Important: The summary will depend on the order of the supplied documents!
+        :return: List of Documents, where Document.content contains the summarization and Document.meta["context"]
+                 the original, not summarized text
         """
         pass
 
@@ -50,7 +54,7 @@ class BaseSummarizer(BaseComponent):
     ):
 
         results = self.predict_batch(
-            documents=documents, batch_size=batch_size, generate_single_summary=generate_single_summary
+            documents=documents, generate_single_summary=generate_single_summary, batch_size=batch_size
         )
 
         return {"documents": results}, "output_1"
