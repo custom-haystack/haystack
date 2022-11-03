@@ -34,6 +34,9 @@ components:    # define all the building-blocks for Pipeline
   - name: Preprocessor
     type: PreProcessor
     params:
+      clean_empty_lines: true
+      clean_whitespace: true
+      clean_header_footer: true
       split_by: word
       split_length: 100
       split_overlap: 3
@@ -46,7 +49,7 @@ components:    # define all the building-blocks for Pipeline
         - "json"
 
 pipelines:
-  - name: query    # a sample extractive-qa Pipeline
+  - name: query    #generative pipeline
     nodes:
       - name: Retriever
         inputs: [Query]
