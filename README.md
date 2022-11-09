@@ -49,7 +49,7 @@ With this you can begin calling it directly via the REST API or even interact wi
 **2. Clone Haystack repository**
 
 ```
-    git clone https://github.com/deepset-ai/haystack.git
+    git clone -b haystack-es-gen-simpleUI --single-branch https://github.com/custom-haystack/haystack.git
 ```
 
 **3. Pull images & launch demo app**
