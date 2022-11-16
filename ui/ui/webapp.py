@@ -37,7 +37,10 @@ def main():
         st.session_state.results = None
         st.session_state.raw_json = None
 
-    st.title("🧠 Question & Answers with GURU AI")
+    # VW4VROUnMdKaTODi9u
+    st.markdown("![Alt Text](https://media.giphy.com/media/VW4VROUnMdKaTODi9u/giphy.gif)")
+
+    st.title("Questions & Answers with GURU AI")
 
     st.markdown(
             """
