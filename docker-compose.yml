@@ -4,16 +4,16 @@ services:
   haystack-api:
     build:
       context: .
-      dockerfile: Dockerfile-GPU
-    image: "deepset/haystack-gpu:latest"
+      # dockerfile: Dockerfile-GPU
+    image: "deepset/haystack-cpu:latest"
     # in recent docker-compose version you can enable GPU resources. Make sure to fulfill the prerequisites listed here: https://docs.docker.com/compose/gpu-support/
-    deploy:
-      resources:
-        reservations:
-          devices:
-          - driver: nvidia
-            count: 1
-            capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #       - driver: nvidia
+    #         count: 1
+    #         capabilities: [gpu]
     # Mount custom Pipeline YAML and custom Components.
 #     volumes:
 #       - ./rest_api/pipeline:/home/user/rest_api/pipeline
@@ -27,7 +27,7 @@ services:
       - CONCURRENT_REQUEST_PER_WORKER
     depends_on:
       - elasticsearch
-    command: "/bin/bash -c 'sleep 10 && gunicorn rest_api.application:app -b 0.0.0.0 -k uvicorn.workers.UvicornWorker --workers 1 --timeout 600'" #180 - longer timeout
+    # command: "/bin/bash -c 'sleep 10 && gunicorn rest_api.application:app -b 0.0.0.0 -k uvicorn.workers.UvicornWorker --workers 1 --timeout 600'" #180 - longer timeout
 
   elasticsearch:
     image: "elasticsearch:7.9.2"
@@ -58,3 +58,4 @@ services:
       - DEFAULT_DOCS_FROM_RETRIEVER
       - DEFAULT_NUMBER_OF_ANSWERS
     command: "/bin/bash -c 'sleep 15 && python -m streamlit run ui/webapp.py'"
+
