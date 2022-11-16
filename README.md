@@ -9,6 +9,8 @@
 - Seq2Seq Generator for LFQA (long form question answering)
 - Streamlit web app for UI for Q&A (questions and answers)
 
+*Note: If you update to the latest version, this code will break. Haystack team removed the json schemas. I used Version 1.9 to restore the missing files."
+
 **Full Installation**
 
 If you plan to be using more advanced features like Milvus, FAISS, Weaviate, OCR or Ray,
