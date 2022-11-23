@@ -33,6 +33,8 @@ COPY rest_api /home/user/rest_api/
 
 # Install package
 RUN pip install --upgrade pip
+# Bug patch for glitch with faiss-cpu - need to downgrade
+RUN pip install faiss-cpu==1.7.2
 RUN pip install --no-cache-dir .[docstores,crawler,preprocessing,ocr,ray]
 RUN pip install --no-cache-dir rest_api/
 RUN ls /home/user
