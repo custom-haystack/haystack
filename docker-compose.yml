@@ -40,6 +40,7 @@ services:
       - DOCUMENTSTORE_PARAMS_HOST=elasticsearch
       - PIPELINE_YAML_PATH=/home/user/rest_api/rest_api/pipeline/pipelines_dpr.haystack-pipeline.yml
       - CONCURRENT_REQUEST_PER_WORKER
+      - TAKE_FILE_OWNERSHIP=true
     depends_on:
       - elasticsearch
     # command: "/bin/bash -c 'sleep 10 && gunicorn rest_api.application:app -b 0.0.0.0 -k uvicorn.workers.UvicornWorker --workers 1 --timeout 600'" #180 - longer timeout
@@ -53,7 +54,8 @@ services:
     restart: on-failure
     environment:
           - discovery.type=single-node
-    #       - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+          # - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+          - TAKE_FILE_OWNERSHIP=true
     # healthcheck:
     #     test: curl --fail http://localhost:9200/_cat/health || exit 1
     #     interval: 10s
