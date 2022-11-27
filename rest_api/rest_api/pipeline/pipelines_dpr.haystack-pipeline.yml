@@ -28,7 +28,7 @@ components:    # define all the building-blocks for Pipeline
       num_beams: 2
       use_gpu: True
   - name: TextFileConverter
-    type: TextConverter
+    type: TextConverter 
   - name: PDFFileConverter
     type: PDFToTextConverter
   - name: Preprocessor
@@ -36,11 +36,11 @@ components:    # define all the building-blocks for Pipeline
     params:
       clean_empty_lines: true
       clean_whitespace: true
-      clean_header_footer: true
+      clean_header_footer: false
       split_by: word
-      split_length: 100
-      split_overlap: 3
-      split_respect_sentence_boundary: True
+      split_length: 150
+      split_overlap: 75
+      split_respect_sentence_boundary: False
   - name: FileTypeClassifier
     type: FileTypeClassifier
     params:
