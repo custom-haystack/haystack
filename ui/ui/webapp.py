@@ -31,7 +31,7 @@ def main():
 #     logo_pth = path+'/s2s_white.png'
 #     logo_im = Image.open(logo_pth)
 
-    st.set_page_config(page_title="ATHENA AI", page_icon='https://haystack.deepset.ai/img/HaystackIcon.png') # https://haystack.deepset.ai/img/HaystackIcon.png
+    st.set_page_config(page_title="ATHENA AI", page_icon="https://haystack.deepset.ai/img/HaystackIcon.png") # https://haystack.deepset.ai/img/HaystackIcon.png
     
     set_state_if_absent("question", None)
     set_state_if_absent("answer", None)
