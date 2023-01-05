@@ -26,12 +26,12 @@ def main():
 
     path = os.path.dirname(__file__)
 
-    favicon_pth = path+'/s2s.png'
-    favicon_im = Image.open(favicon_pth)
-    logo_pth = path+'/s2s_white.png'
-    logo_im = Image.open(logo_pth)
+#     favicon_pth = path+'/s2s.png'
+#     favicon_im = Image.open(favicon_pth)
+#     logo_pth = path+'/s2s_white.png'
+#     logo_im = Image.open(logo_pth)
 
-    st.set_page_config(page_title="GURU AI", page_icon=favicon_im) # https://haystack.deepset.ai/img/HaystackIcon.png
+    st.set_page_config(page_title="ATHENA AI", page_icon='https://haystack.deepset.ai/img/HaystackIcon.png') # https://haystack.deepset.ai/img/HaystackIcon.png
     
     set_state_if_absent("question", None)
     set_state_if_absent("answer", None)
@@ -49,9 +49,9 @@ def main():
     footer {visibility: hidden;}
     </style> """, unsafe_allow_html=True)
 
-    st.image(logo_im)
+#     st.image(logo_im)
     
-    st.title("Meet GURU AI.")
+    st.title("Meet ATHENA AI.")
 
     _left, mid, _right = st.columns(3)
     with mid:
@@ -59,11 +59,11 @@ def main():
 
     st.markdown(
             """
-    Based on the FAR and DFAR pdf booklets, GURU will answer any questions you have about
+    Based on the FAR and DFAR pdf booklets, ATHENA will answer any questions you have about
 
     <h3 style='text-align:center;padding: 0 0 1rem;'>Federal Regulation Acquisition</h3>
    
-    Ask any question and see if the AI can find the correct answer!
+    Ask any question and see if she can find the correct answer!
 
     *You can use keywords or full-fledged questions, and the AI will respond in complete sentences*
     """,
@@ -76,21 +76,21 @@ def main():
 
     top_k_reader = 1
     top_k_retriever = 10
-    # st.sidebar.write("## File Upload:")
-    # data_files = st.sidebar.file_uploader("", type=["pdf"], accept_multiple_files=True)
-    # for data_file in data_files:
-    #     # Upload file
-    #     if data_file:
-    #         raw_json = upload_doc(data_file)
-    #         st.sidebar.write(str(data_file.name) + " &nbsp;&nbsp; ✅ ")
-    #         st.subheader("REST API JSON response")
-    #         st.sidebar.write(raw_json)
+    st.sidebar.write("## File Upload:")
+    data_files = st.sidebar.file_uploader("", type=["pdf"], accept_multiple_files=True)
+    for data_file in data_files:
+        # Upload file
+        if data_file:
+            raw_json = upload_doc(data_file)
+            st.sidebar.write(str(data_file.name) + " &nbsp;&nbsp; ✅ ")
+            st.subheader("REST API JSON response")
+            st.sidebar.write(raw_json)
 
-    # hs_version = ""
-    # try:
-    #     hs_version = f" <small>(v{haystack_version()})</small>"
-    # except Exception:
-    #     pass
+    hs_version = ""
+    try:
+        hs_version = f" <small>(v{haystack_version()})</small>"
+    except Exception:
+        pass
 
     # Search bar
     question = st.text_input("", value="", max_chars=100, on_change=reset_results)
