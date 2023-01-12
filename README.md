@@ -9,7 +9,7 @@
 - Seq2Seq Generator for LFQA (long form question answering)
 - Streamlit web app for UI for Q&A (questions and answers)
 
-*Note: If you update to the latest version, this code will break. Haystack team removed the json schemas. I used Version 1.9 to restore the missing files."
+*Note: If you update to the latest version, this code will break. Haystack team removed the json schemas. I used Version 1.9 to restore the missing files.
 
 **Full Installation**
 
@@ -51,7 +51,7 @@ With this you can begin calling it directly via the REST API or even interact wi
 **2. Clone Haystack repository**
 
 ```
-    git clone -b haystack-es-gen-simpleUI --single-branch https://github.com/custom-haystack/haystack.git
+    git clone -b haystack-es-gen-simpleUI-athena --single-branch https://github.com/custom-haystack/haystack.git
 ```
 
 **3. Pull images & launch demo app**
