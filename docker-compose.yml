@@ -31,7 +31,7 @@ services:
     #         capabilities: [gpu]
     # Mount custom Pipeline YAML and custom Components.
     volumes:
-      - ./rest_api/pipeline:/usr/share/rest_api/pipeline
+      - ./rest_api/pipeline:/usr/share/rest_api/pipeline_athena
     ports:
       - 8000:8000
     restart: on-failure
@@ -48,7 +48,7 @@ services:
   elasticsearch:
     image: "elasticsearch:7.9.2"
     volumes:
-      - ./data/es_data:/usr/share/elasticsearch/data
+      - ./data/es_data:/usr/share/elasticsearch/data_athena
     ports:
       - 9200:9200
     restart: on-failure

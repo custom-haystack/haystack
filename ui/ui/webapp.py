@@ -51,46 +51,40 @@ def main():
 
 #     st.image(logo_im)
     
-    st.title("Meet ATHENA AI.")
+    st.title("Meet ATHENA AI")
 
     _left, mid, _right = st.columns(3)
     with mid:
-        st.image('https://media.giphy.com/media/VW4VROUnMdKaTODi9u/giphy.gif')
+        st.image('https://media.giphy.com/media/yu7imbJXjZVeaE344y/giphy.gif')
 
     st.markdown(
             """
-    Based on the FAR and DFAR pdf booklets, ATHENA will answer any questions you have about
+    Developed by <span style='font-size:22px'><b>Nano Bird LLC,</b></span> ATHENA will answer any questions you have about
 
-    <h3 style='text-align:center;padding: 0 0 1rem;'>Federal Regulation Acquisition</h3>
-   
-    Ask any question and see if she can find the correct answer!
+    <h3 style='text-align:center;padding: 0 0 1rem;'>Virginia State Law</h3>
 
-    *You can use keywords or full-fledged questions, and the AI will respond in complete sentences*
+    *ATHENA will respond in complete, original sentences.*
     """,
             unsafe_allow_html=True,
         )
 
-    # st.image('https://media.giphy.com/media/VW4VROUnMdKaTODi9u/giphy.gif')
-    # VW4VROUnMdKaTODi9u
-    # st.markdown("![Alt Text](https://media.giphy.com/media/VW4VROUnMdKaTODi9u/giphy.gif)")
-
     top_k_reader = 1
     top_k_retriever = 10
-    st.sidebar.write("## File Upload:")
-    data_files = st.sidebar.file_uploader("", type=["pdf"], accept_multiple_files=True)
-    for data_file in data_files:
-        # Upload file
-        if data_file:
-            raw_json = upload_doc(data_file)
-            st.sidebar.write(str(data_file.name) + " &nbsp;&nbsp; ✅ ")
-            st.subheader("REST API JSON response")
-            st.sidebar.write(raw_json)
+    # st.sidebar.write("## File Upload:")
+    # data_files = st.sidebar.file_uploader("", type=["pdf"], accept_multiple_files=True)
+    # for data_file in data_files:
+    #     # Upload file
+    #     if data_file:
+    #         raw_json = upload_doc(data_file)
+    #         st.sidebar.write(str(data_file.name) + " &nbsp;&nbsp; ✅ ")
+    #         st.subheader("REST API JSON response")
+    #         st.sidebar.write(raw_json)
 
-    hs_version = ""
-    try:
-        hs_version = f" <small>(v{haystack_version()})</small>"
-    except Exception:
-        pass
+    # hs_version = ""
+    # try:
+    #     hs_version = f" <small>(v{haystack_version()})</small>"
+    # except Exception:
+    #     pass
 
     # Search bar
     question = st.text_input("", value="", max_chars=100, on_change=reset_results)
