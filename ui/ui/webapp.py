@@ -63,13 +63,14 @@ def main():
 
     <h3 style='text-align:center;padding: 0 0 1rem;'>Virginia State Law</h3>
 
-    *ATHENA will respond in complete, original sentences.*
+    *ATHENA will respond with the top results to your query, including the passage context and exact document the answer was extracted from.*
     """,
             unsafe_allow_html=True,
         )
 
-    top_k_reader = 1
+    top_k_reader = 5
     top_k_retriever = 10
+    userID = 'livy01'
     # st.sidebar.write("## File Upload:")
     # data_files = st.sidebar.file_uploader("", type=["pdf"], accept_multiple_files=True)
     # for data_file in data_files:
@@ -114,7 +115,7 @@ def main():
         ):
             try:
                 st.session_state.results, st.session_state.raw_json = query(
-                    question, top_k_reader=top_k_reader, top_k_retriever=top_k_retriever
+                    question, top_k_reader=top_k_reader, top_k_retriever=top_k_retriever # need to add userID filter as env variable or something
                 )
             except JSONDecodeError as je:
                 st.error("👓 &nbsp;&nbsp; An error occurred reading the results. Is the document store working?")
@@ -134,28 +135,30 @@ def main():
 
         for count, result in enumerate(st.session_state.results):
             if result["answer"]:
-                answer = result["answer"] #, result["context"] , context
-                # start_idx = context.find(answer)
-                # end_idx = start_idx + len(answer)
+                answer, context = result["answer"], result["context"] #, context
+                start_idx = context.find(answer)
+                end_idx = start_idx + len(answer)
                 # Hack due to this bug: https://github.com/streamlit/streamlit/issues/3190
                 st.write(
-                    # markdown(context[:start_idx] + str(annotation(answer, "ANSWER", "#8ef")) + context[end_idx:]),
-                    # unsafe_allow_html=True,
-                    answer
+                    markdown(context[:start_idx] + str(annotation(answer, "ANSWER", "#8ef")) + context[end_idx:]),
+                    unsafe_allow_html=True
+                    # answer
                 )
-                # source = ""
-                # url, title = get_backlink(result)
-                # if url and title:
-                #     source = f"[{result['document']['meta']['title']}]({result['document']['meta']['url']})"
-                # else:
-                #     source = f"{result['source']}"
-                # st.markdown(f"**Relevance:** {result['relevance']} -  **Source:** {source}")
-
+                source = ""
+                url, title = get_backlink(result)
+                if url and title:
+                    source = f"[{result['document']['meta']['title']}]({result['document']['meta']['url']})"
+                else:
+                    source = f"{result['source']}"
+                st.markdown(f"**Relevance:** {result['relevance']} -  **Source:** {source}")
             else:
-                st.info(
-                    "🤔 &nbsp;&nbsp; Haystack is unsure whether any of the documents contain an answer to your question. Try to reformulate it!"
-                )
-                st.write("**Relevance:** ", result["relevance"])
+                if len((st.session_state.results)) > 1:
+                    st.write("")
+                else:
+                    st.info(
+                        "🤔 &nbsp;&nbsp; Haystack is unsure whether any of the documents contain an answer to your question. Try to reformulate it!"
+                    )
+                    st.write("**Relevance:** ", result["relevance"])
 
 
 main()

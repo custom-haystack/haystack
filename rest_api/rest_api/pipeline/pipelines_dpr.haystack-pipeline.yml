@@ -8,24 +8,24 @@ components:    # define all the building-blocks for Pipeline
     params:
       host: localhost
       similarity: dot_product
-      embedding_dim: 384 #128 #384
+      embedding_dim: 768 #128 #384
   - name: Retriever
-    type: MultihopEmbeddingRetriever
+    type: EmbeddingRetriever
     params:
       document_store: DocumentStore    # params can reference other components defined in the YAML
       top_k: 10
-      embedding_model: sentence-transformers/all-MiniLM-L6-v2
+      embedding_model: oliviamga2/multi-qa-mpnet-base-dot-v1_legal_finetune # sentence-transformers/multi-qa-mpnet-base-dot-v1
       model_format: sentence_transformers
-      scale_score: true
-      # query_embedding_model: facebook/dpr-question_encoder-single-nq-base #vblagoje/dpr-question_encoder-single-lfqa-wiki 
-      # passage_embedding_model: facebook/dpr-ctx_encoder-single-nq-base #vblagoje/dpr-ctx_encoder-single-lfqa-wiki #
-      # sentence-transformers/all-MiniLM-L6-v2
+      # use_auth_token: True
       use_gpu: True
   - name: Reader       # custom-name for the component; helpful for visualization & debugging
-    type: Seq2SeqGenerator    # Haystack Class name for the component
+    type: FARMReader    # Haystack Class name for the component
     params:
-      model_name_or_path: vblagoje/bart_lfqa
-      num_beams: 2
+      model_name_or_path: deepset/roberta-base-squad2  #deepset/minilm-uncased-squad2 ahotrod/albert_xxlargev1_squad2_512
+      top_k: 5
+      context_window_size: 1000
+      # duplicate_filtering: 1
+      return_no_answer: True
       use_gpu: True
   - name: TextFileConverter
     type: TextConverter 
@@ -38,9 +38,9 @@ components:    # define all the building-blocks for Pipeline
       clean_whitespace: true
       clean_header_footer: false
       split_by: word
-      split_length: 150
-      split_overlap: 75
-      split_respect_sentence_boundary: False
+      split_length: 200 # because max seq length for both retriever and reader used is 512, leaving room for expansion with tokens
+      split_overlap: 6 # 3:100 ratio
+      split_respect_sentence_boundary: true
   - name: FileTypeClassifier
     type: FileTypeClassifier
     params:
@@ -49,7 +49,7 @@ components:    # define all the building-blocks for Pipeline
         - "json"
 
 pipelines:
-  - name: query    #generative pipeline
+  - name: query
     nodes:
       - name: Retriever
         inputs: [Query]
